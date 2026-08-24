@@ -24,14 +24,14 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); transition: 0.3s; padding-bottom: 70px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); transition: background-color 0.3s, color 0.3s; padding-bottom: 70px; }
 
         .app-header { background-color: var(--card-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100; }
         .header-title { display: flex; align-items: center; gap: 10px; color: var(--primary); }
         .header-title h1 { font-size: 18px; margin: 0; }
         .icon-btn { background: none; border: none; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 5px;}
 
-        .app-main { padding: 15px; max-width: 900px; margin: 0 auto; }
+        .app-main { padding: 15px; max-width: 1000px; margin: 0 auto; }
         .view { display: none; animation: fadeIn 0.3s ease; }
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -58,11 +58,11 @@
         .flex-gap { display: flex; gap: 8px; }
 
         .table-responsive { overflow-x: auto; }
-        .data-table { width: 100%; border-collapse: collapse; min-width: 700px; text-align: right; }
+        .data-table { width: 100%; border-collapse: collapse; min-width: 1000px; text-align: right; }
         .data-table th, .data-table td { padding: 8px 5px; border-bottom: 1px solid var(--border); font-size: 13px; }
         .data-table th { background-color: var(--bg-color); font-weight: bold; white-space: nowrap; }
         
-        .fin-input { width: 60px; padding: 6px; font-size: 12px; text-align: center; border: 1px solid var(--border); border-radius: 4px; background: var(--card-bg); color: var(--text-main); }
+        .fin-input { width: 55px; padding: 6px; font-size: 12px; text-align: center; border: 1px solid var(--border); border-radius: 4px; background: var(--card-bg); color: var(--text-main); }
         
         .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
         .status-work { background-color: var(--primary); color: white; }
@@ -72,7 +72,7 @@
         .list-group { list-style: none; }
         .list-group li { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid var(--border); background-color: var(--bg-color); border-radius: 6px; margin-bottom: 5px; }
 
-        /* Internal UI Slip Table (Matches PDF Style) */
+        /* Internal UI Slip Table */
         .ui-slip-table { width: 100%; border-collapse: collapse; font-weight: bold; font-size: 14px; margin-bottom: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
         .ui-slip-table td { padding: 12px 10px; border: none; color: var(--text-main); }
         .ui-slip-table .bg-g-light { background-color: var(--green-light); border-bottom: 1px solid var(--bg-color); }
@@ -83,6 +83,11 @@
         .ui-slip-table .td-label { text-align: right; width: 35%; }
         .ui-slip-table .td-center { text-align: center; color: var(--text-muted); font-size: 13px; width: 45%; }
         
+        /* Sub Items (Salary Breakdown - Indented) */
+        .sub-item td { font-size: 13px; color: var(--text-muted) !important; padding-top: 6px !important; padding-bottom: 6px !important; }
+        .sub-item .td-label { padding-right: 25px !important; font-weight: normal; width: 35%; }
+        .ui-slip-table .td-sub-val { text-align: left; padding-left: 20px; font-size: 16px; font-family: Arial, sans-serif; width: 45%; color: var(--text-muted); }
+
         .text-info { color: var(--info); }
         .text-danger { color: var(--danger); }
         .hidden { display: none !important; }
@@ -92,6 +97,40 @@
         .nav-item.active { color: var(--nav-active); font-weight: bold; }
 
         .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background-color: var(--text-main); color: var(--bg-color); padding: 12px 20px; border-radius: 30px; font-size: 13px; z-index: 1000; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: opacity 0.3s; }
+
+        /* Print Specific Styles */
+        #printArea { display: none; }
+        @media print {
+            body { background: #fff !important; color: #000 !important; }
+            .app-header, .app-main, .bottom-nav, .toast { display: none !important; }
+            #printArea { display: block !important; width: 100%; direction: rtl; }
+            
+            .bulk-print-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            
+            .slip-container { border: 1px solid #000; padding: 10px; border-radius: 8px; page-break-inside: avoid; background: #fff; margin-bottom: 20px; font-family: 'Segoe UI', Arial, sans-serif; }
+            .slip-header { text-align: center; padding-bottom: 5px; font-size: 26px; font-weight: bold; border-bottom: 2px solid #000; margin-bottom: 10px; }
+            .slip-table { width: 100%; border-collapse: collapse; font-weight: bold; font-size: 16px; }
+            .slip-table td { padding: 8px 5px; border: none; color: #000; }
+            
+            .print-bg-g-light { background-color: #eaf1e3 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; border-bottom: 2px solid #fff; }
+            .print-bg-r-light { background-color: #f7e6e1 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; border-bottom: 2px solid #fff; }
+            .print-bg-g-dark { background-color: #c0d8a5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; border-top: 2px solid #000; border-bottom: 2px solid #000; }
+            
+            .print-td-right { text-align: right; width: 33%; padding-right: 15px !important; }
+            .print-td-center { text-align: center; width: 44%; font-size: 14px; }
+            .print-td-left { text-align: left; width: 23%; padding-left: 15px !important; font-size: 20px; font-family: Arial, sans-serif; }
+            
+            .print-sub-item td { font-size: 14px; color: #555 !important; padding-top: 4px !important; padding-bottom: 4px !important; }
+            .print-sub-item .print-td-right { padding-right: 30px !important; font-weight: normal; }
+            .print-td-sub-val { text-align: left; padding-left: 20px; font-size: 16px; font-family: Arial, sans-serif; width: 44%; color: #555; }
+
+            .global-print-title { text-align: center; font-size: 20px; font-weight: bold; background: #eaf1e3 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 10px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #000;}
+        }
+
+        /* Checkbox Toggles Group */
+        .prefs-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; padding: 10px; background: var(--bg-color); border-radius: 6px; }
+        .prefs-group label { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: normal; cursor: pointer; margin: 0; }
+        .prefs-section-title { font-size: 12px; font-weight: bold; color: var(--primary); margin-bottom: 8px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -150,7 +189,7 @@
                     </div>
                 </div>
 
-                <!-- ملخص راتب الموظف (التصميم الداخلي المفصل) -->
+                <!-- ملخص راتب الموظف الداخلي -->
                 <div id="summaryCard" class="hidden mb-15" style="border: 2px solid var(--primary); padding: 15px; border-radius: 8px;">
                     <h3 style="font-size: 18px; margin-bottom: 15px; text-align: center;">كشف راتب: <span id="sumEmpName"></span></h3>
                     
@@ -159,30 +198,37 @@
                             <td colspan="2" class="td-label">الراتب الأساسي</td>
                             <td class="td-val" id="sumBaseSalary">0</td>
                         </tr>
-                        <tr class="bg-g-light">
+                        
+                        <!-- مصادر تفصيل الراتب (مزاحة للداخل) -->
+                        <tr class="bg-g-light sub-item" id="rowSalCash"><td class="td-label">— من الكاش</td><td class="td-sub-val" id="sumSalCashVal">0</td><td></td></tr>
+                        <tr class="bg-g-light sub-item" id="rowSalTransfer"><td class="td-label">— من التحويل</td><td class="td-sub-val" id="sumSalTransferVal">0</td><td></td></tr>
+                        <tr class="bg-g-light sub-item" id="rowSalDrawer"><td class="td-label">— من درج الشحن</td><td class="td-sub-val" id="sumSalDrawerVal">0</td><td></td></tr>
+                        <tr class="bg-g-light sub-item" id="rowSalTailor"><td class="td-label">— من محل الخياط</td><td class="td-sub-val" id="sumSalTailorVal">0</td><td></td></tr>
+
+                        <tr class="bg-g-light" id="rowUnusedOff">
                             <td colspan="2" class="td-label">اضافى ايام من الاوف</td>
-                            <td class="td-val" id="sumUnusedOff">0</td>
+                            <td class="td-val" id="sumUnusedOffVal">0</td>
                         </tr>
-                        <tr class="bg-g-light">
+                        <tr class="bg-g-light" id="rowOvertime">
                             <td class="td-label">اضافى</td>
                             <td class="td-center" id="sumOvertimeHrs">0:00 ساعة</td>
                             <td class="td-val" id="sumOvertimeVal">0</td>
                         </tr>
-                        <tr class="bg-g-light">
+                        <tr class="bg-g-light" id="rowComm1">
                             <td class="td-label">عمولات مبيعات</td>
                             <td class="td-center" id="sumComm1Text">0 تابى و 0 تمارا و 0 مورا</td>
                             <td class="td-val" id="sumComm1Val">0</td>
                         </tr>
-                        <tr class="bg-g-light">
+                        <tr class="bg-g-light" id="rowComm2">
                             <td class="td-label">ع . شرائح</td>
                             <td class="td-center" id="sumComm2Text">0 هواتف و 0 هواوى</td>
                             <td class="td-val" id="sumComm2Val">0</td>
                         </tr>
-                        <tr class="bg-r-light">
+                        <tr class="bg-r-light" id="rowAbsence">
                             <td colspan="2" class="td-label">غياب</td>
                             <td class="td-val" id="sumAbsenceVal">0</td>
                         </tr>
-                        <tr class="bg-r-light">
+                        <tr class="bg-r-light" id="rowDelay">
                             <td class="td-label">تأخير</td>
                             <td class="td-center" id="sumDelayHrs">0:00 ساعة</td>
                             <td class="td-val" id="sumDelayVal">0</td>
@@ -191,26 +237,26 @@
                             <td colspan="2" class="td-label">صافى المرتب</td>
                             <td class="td-val" id="sumNet">0</td>
                         </tr>
-                        <tr class="bg-r-light">
+                        <tr class="bg-r-light" id="rowAdvances">
                             <td colspan="2" class="td-label">مسحوبات (سلف)</td>
                             <td class="td-val" id="sumAdvancesVal">0</td>
                         </tr>
-                        <tr class="bg-r-light">
+                        <tr class="bg-r-light" id="rowPurchases">
                             <td colspan="2" class="td-label">آجل النظام</td>
                             <td class="td-val" id="sumPurchasesVal">0</td>
                         </tr>
-                        <tr class="bg-r-light">
+                        <tr class="bg-r-light" id="rowShipping">
                             <td colspan="2" class="td-label">آجل الشحن</td>
                             <td class="td-val" id="sumShippingVal">0</td>
                         </tr>
-                        <tr class="bg-g-dark">
+                        <tr class="bg-g-dark" id="rowFinal">
                             <td colspan="2" class="td-label" style="font-size: 15px;">المرتب بعد المسحوبات والاجل</td>
                             <td class="td-val" id="sumFinal">0</td>
                         </tr>
                     </table>
 
                     <button class="btn btn-info w-100" onclick="AppController.exportEmployeePDF()">
-                        <span class="material-icons">picture_as_pdf</span> طباعة كرت الراتب (PDF)
+                        <span class="material-icons">print</span> طباعة كرت الراتب 
                     </button>
                 </div>
 
@@ -232,7 +278,7 @@
                     <div class="form-row mb-15">
                         <div class="form-group">
                             <label>اسم الموظف</label>
-                            <input type="text" id="newEmpName" placeholder="الاسم ثلاثي" required>
+                            <input type="text" id="newEmpName" placeholder="الاسم" required>
                         </div>
                         <div class="form-group">
                             <label>الراتب الأساسي</label>
@@ -245,10 +291,46 @@
                             <input type="number" id="newEmpHours" placeholder="مثال: 8" required min="1" max="24" value="8">
                         </div>
                         <div class="form-group">
-                            <label>أيام الإجازة (شهرياً)</label>
+                            <label>أيام الإجازة المسموحة</label>
                             <input type="number" id="newEmpVacations" placeholder="مثال: 4" required min="0" max="30" value="4">
                         </div>
                     </div>
+                    
+                    <!-- إعدادات الكرت المخصصة للموظف -->
+                    <div class="form-group" style="border: 1px solid var(--border); padding: 10px; border-radius: 8px;">
+                        <label style="border-bottom: 1px solid var(--border); padding-bottom: 5px; margin-bottom: 5px; color: var(--primary);">تفعيل بنود الكرت لهذا الموظف:</label>
+                        
+                        <div class="prefs-section-title">مصادر تفصيل الراتب الأساسي</div>
+                        <div class="prefs-group">
+                            <label><input type="checkbox" id="prefSalCash"> كاش</label>
+                            <label><input type="checkbox" id="prefSalTransfer"> تحويل</label>
+                            <label><input type="checkbox" id="prefSalDrawer"> درج الشحن</label>
+                            <label><input type="checkbox" id="prefSalTailor"> محل الخياط</label>
+                        </div>
+
+                        <div class="prefs-section-title">الإضافيات</div>
+                        <div class="prefs-group">
+                            <label><input type="checkbox" id="prefUnusedOff" checked> أيام من الأوف</label>
+                            <label><input type="checkbox" id="prefOvertime" checked> الإضافي (ساعات)</label>
+                        </div>
+
+                        <div class="prefs-section-title">العمولات</div>
+                        <div class="prefs-group">
+                            <label><input type="checkbox" id="prefSalesComm" checked> المبيعات (تابي/تمارا/مورا)</label>
+                            <label><input type="checkbox" id="prefSimComm" checked> الشرائح (هواتف/هواوي)</label>
+                        </div>
+
+                        <div class="prefs-section-title">الاستقطاعات والآجل</div>
+                        <div class="prefs-group">
+                            <label><input type="checkbox" id="prefAbsence" checked> الغياب</label>
+                            <label><input type="checkbox" id="prefDelay" checked> التأخير (ساعات)</label>
+                            <label><input type="checkbox" id="prefAdvances" checked> مسحوبات (سلف)</label>
+                            <label><input type="checkbox" id="prefPurchases" checked> آجل النظام</label>
+                            <label><input type="checkbox" id="prefShipping" checked> آجل الشحن</label>
+                            <label><input type="checkbox" id="prefFinalNet" checked> المرتب النهائي المستحق</label>
+                        </div>
+                    </div>
+
                     <div class="flex-gap">
                         <button type="submit" class="btn btn-primary w-100" id="btnSubmitStaff"><span class="material-icons">add</span> حفظ البيانات</button>
                         <button type="button" class="btn btn-outline w-100 hidden" id="btnCancelEdit" onclick="AppController.cancelEditEmployee()">إلغاء التعديل</button>
@@ -260,28 +342,32 @@
             </div>
         </div>
 
-        <!-- 3. شاشة الإدارة المالية (العمولات والخصومات) -->
+        <!-- 3. شاشة الإدارة المالية -->
         <div id="view-financials" class="view">
             <div class="card">
                 <div class="flex-between mb-15">
-                    <h2>المالية (سلف، مشتريات، عمولات)</h2>
+                    <h2>المالية والتفاصيل</h2>
                     <input type="month" id="finMonth" onchange="AppController.renderFinancials()" style="width: auto; padding: 5px;">
                 </div>
-                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">يتم حفظ الأرقام تلقائياً. أدخل العدد للعمولات والقيمة للمسحوبات.</p>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">القيم تُحفظ تلقائياً.</p>
                 
                 <div class="table-responsive">
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>الموظف</th>
-                                <th style="color: var(--danger)">مسحوبات(سلف)</th>
-                                <th style="color: var(--danger)">آجل النظام</th>
-                                <th style="color: var(--danger)">آجل الشحن</th>
+                                <th style="color: #607d8b">أساسي كاش</th>
+                                <th style="color: #607d8b">أساسي تحويل</th>
+                                <th style="color: #607d8b">أساسي درج</th>
+                                <th style="color: #607d8b">أساسي خياط</th>
+                                <th style="color: var(--danger)">سلف</th>
+                                <th style="color: var(--danger)">آجل نظام</th>
+                                <th style="color: var(--danger)">آجل شحن</th>
                                 <th style="color: var(--primary)">تابي</th>
                                 <th style="color: var(--primary)">تمارا</th>
                                 <th style="color: var(--primary)">مورا</th>
-                                <th style="color: var(--primary)">ش.هواتف</th>
-                                <th style="color: var(--primary)">ش.هواوي</th>
+                                <th style="color: var(--primary)">هواتف</th>
+                                <th style="color: var(--primary)">هواوي</th>
                             </tr>
                         </thead>
                         <tbody id="finTableBody"></tbody>
@@ -289,7 +375,7 @@
                 </div>
 
                 <button class="btn btn-primary w-100 mt-10" onclick="AppController.exportGlobalPDF()">
-                    <span class="material-icons">summarize</span> تصدير مسير الرواتب المجمع للمدير (PDF)
+                    <span class="material-icons">print</span> طباعة مسير الرواتب المجمع 
                 </button>
             </div>
         </div>
@@ -304,6 +390,9 @@
         </div>
 
     </main>
+
+    <!-- منطقة الطباعة المخفية للآيفون -->
+    <div id="printArea"></div>
 
     <nav class="bottom-nav">
         <button class="nav-item active" data-target="view-entry"><span class="material-icons">edit_calendar</span>الدوام</button>
@@ -328,20 +417,22 @@
             logs: StorageManager.get('db_logs'),
             financials: StorageManager.get('db_financials'), 
 
-            addEmployee: (name, salary, hours, vacations) => {
+            addEmployee: (name, salary, hours, vacations, prefs) => {
                 DataLayer.employees.push({ 
                     id: 'emp_' + Date.now(), name, 
-                    salary: parseFloat(salary), hours: parseFloat(hours), vacations: parseFloat(vacations) 
+                    salary: parseFloat(salary), hours: parseFloat(hours), vacations: parseFloat(vacations),
+                    prefs: prefs 
                 });
                 StorageManager.set('db_employees', DataLayer.employees);
             },
-            updateEmployee: (id, name, salary, hours, vacations) => {
+            updateEmployee: (id, name, salary, hours, vacations, prefs) => {
                 const idx = DataLayer.employees.findIndex(e => e.id === id);
                 if(idx > -1) {
                     DataLayer.employees[idx].name = name;
                     DataLayer.employees[idx].salary = parseFloat(salary);
                     DataLayer.employees[idx].hours = parseFloat(hours);
                     DataLayer.employees[idx].vacations = parseFloat(vacations);
+                    DataLayer.employees[idx].prefs = prefs;
                     StorageManager.set('db_employees', DataLayer.employees);
                 }
             },
@@ -364,10 +455,11 @@
             },
             getFinancials: (empId, month) => {
                 let fin = DataLayer.financials.find(f => f.empId === empId && f.month === month);
-                if (!fin) fin = { empId, month, advances: 0, purchases: 0, shippingCredit: 0, tabby: 0, tamara: 0, mora: 0, simPhones: 0, simHuawei: 0 };
-                // Compatibility for old data
+                if (!fin) fin = { empId, month, advances: 0, purchases: 0, shippingCredit: 0, tabby: 0, tamara: 0, mora: 0, simPhones: 0, simHuawei: 0, salCash: 0, salTransfer: 0, salDrawer: 0, salTailor: 0 };
+                // Compatibility for older records
                 if (fin.tamara === undefined) fin.tamara = 0;
                 if (fin.shippingCredit === undefined) fin.shippingCredit = 0;
+                if (fin.salCash === undefined) { fin.salCash = 0; fin.salTransfer = 0; fin.salDrawer = 0; fin.salTailor = 0; }
                 return fin;
             },
             updateFinancials: (empId, month, field, value) => {
@@ -376,7 +468,7 @@
                 if (finIndex > -1) {
                     DataLayer.financials[finIndex][field] = valNum;
                 } else {
-                    let newFin = { empId, month, advances: 0, purchases: 0, shippingCredit: 0, tabby: 0, tamara: 0, mora: 0, simPhones: 0, simHuawei: 0 };
+                    let newFin = { empId, month, advances: 0, purchases: 0, shippingCredit: 0, tabby: 0, tamara: 0, mora: 0, simPhones: 0, simHuawei: 0, salCash: 0, salTransfer: 0, salDrawer: 0, salTailor: 0 };
                     newFin[field] = valNum;
                     DataLayer.financials.push(newFin);
                 }
@@ -472,12 +564,29 @@
                 const salary = document.getElementById('newEmpSalary').value;
                 const hours = document.getElementById('newEmpHours').value;
                 const vac = document.getElementById('newEmpVacations').value;
+                
+                const prefs = {
+                    showSalCash: document.getElementById('prefSalCash').checked,
+                    showSalTransfer: document.getElementById('prefSalTransfer').checked,
+                    showSalDrawer: document.getElementById('prefSalDrawer').checked,
+                    showSalTailor: document.getElementById('prefSalTailor').checked,
+                    showUnusedOff: document.getElementById('prefUnusedOff').checked,
+                    showOvertime: document.getElementById('prefOvertime').checked,
+                    showSalesComm: document.getElementById('prefSalesComm').checked,
+                    showSimComm: document.getElementById('prefSimComm').checked,
+                    showAbsence: document.getElementById('prefAbsence').checked,
+                    showDelay: document.getElementById('prefDelay').checked,
+                    showAdvances: document.getElementById('prefAdvances').checked,
+                    showPurchases: document.getElementById('prefPurchases').checked,
+                    showShipping: document.getElementById('prefShipping').checked,
+                    showFinalNet: document.getElementById('prefFinalNet').checked
+                };
 
                 if(id) {
-                    DataLayer.updateEmployee(id, name, salary, hours, vac);
+                    DataLayer.updateEmployee(id, name, salary, hours, vac, prefs);
                     AppController.showToast('تم تعديل بيانات الموظف');
                 } else {
-                    DataLayer.addEmployee(name, salary, hours, vac);
+                    DataLayer.addEmployee(name, salary, hours, vac, prefs);
                     AppController.showToast('تمت إضافة الموظف بنجاح');
                 }
                 
@@ -495,6 +604,27 @@
                 document.getElementById('newEmpHours').value = emp.hours;
                 document.getElementById('newEmpVacations').value = emp.vacations !== undefined ? emp.vacations : 4;
                 
+                const prefs = emp.prefs || { 
+                    showSalCash: false, showSalTransfer: false, showSalDrawer: false, showSalTailor: false,
+                    showUnusedOff: true, showOvertime: true, showSalesComm: true, showSimComm: true, 
+                    showAbsence: true, showDelay: true, showAdvances: true, showPurchases: true, showShipping: true, showFinalNet: true 
+                };
+                document.getElementById('prefSalCash').checked = prefs.showSalCash || false;
+                document.getElementById('prefSalTransfer').checked = prefs.showSalTransfer || false;
+                document.getElementById('prefSalDrawer').checked = prefs.showSalDrawer || false;
+                document.getElementById('prefSalTailor').checked = prefs.showSalTailor || false;
+
+                document.getElementById('prefUnusedOff').checked = prefs.showUnusedOff;
+                document.getElementById('prefOvertime').checked = prefs.showOvertime;
+                document.getElementById('prefSalesComm').checked = prefs.showSalesComm;
+                document.getElementById('prefSimComm').checked = prefs.showSimComm;
+                document.getElementById('prefAbsence').checked = prefs.showAbsence;
+                document.getElementById('prefDelay').checked = prefs.showDelay;
+                document.getElementById('prefAdvances').checked = prefs.showAdvances;
+                document.getElementById('prefPurchases').checked = prefs.showPurchases;
+                document.getElementById('prefShipping').checked = prefs.showShipping;
+                document.getElementById('prefFinalNet').checked = prefs.showFinalNet !== false; // Default true
+                
                 document.getElementById('btnSubmitStaff').innerHTML = '<span class="material-icons">save</span> حفظ التعديلات';
                 document.getElementById('btnCancelEdit').classList.remove('hidden');
                 document.getElementById('newEmpName').focus();
@@ -504,6 +634,11 @@
                 document.getElementById('editEmpId').value = '';
                 document.getElementById('btnSubmitStaff').innerHTML = '<span class="material-icons">add</span> حفظ البيانات';
                 document.getElementById('btnCancelEdit').classList.add('hidden');
+                
+                // Reset toggles to defaults
+                document.querySelectorAll('.prefs-group input[type="checkbox"]').forEach(cb => {
+                    cb.checked = !cb.id.startsWith('prefSal');
+                });
             },
             handleDeleteEmployee: (id) => { 
                 if(confirm('هل أنت متأكد من حذف هذا الموظف؟')) { 
@@ -623,31 +758,59 @@
                     filtered = filtered.filter(l => l.empId === empId);
                     const s = AppController.calculateSummary(empId, month);
                     if(s) {
-                        // تحديث بيانات الجدول الداخلي المطابق للـ PDF
+                        const prefs = s.emp.prefs || { 
+                            showSalCash: false, showSalTransfer: false, showSalDrawer: false, showSalTailor: false,
+                            showUnusedOff: true, showOvertime: true, showSalesComm: true, showSimComm: true, 
+                            showAbsence: true, showDelay: true, showAdvances: true, showPurchases: true, showShipping: true, showFinalNet: true 
+                        };
+                        
                         document.getElementById('sumEmpName').textContent = s.emp.name;
                         document.getElementById('sumBaseSalary').textContent = s.baseSalary.toFixed(0);
-                        document.getElementById('sumUnusedOff').textContent = s.unusedOffVal.toFixed(0);
                         
+                        // Salary Breakdown rows
+                        document.getElementById('rowSalCash').classList.toggle('hidden', !prefs.showSalCash);
+                        document.getElementById('sumSalCashVal').textContent = s.fin.salCash.toFixed(0);
+                        document.getElementById('rowSalTransfer').classList.toggle('hidden', !prefs.showSalTransfer);
+                        document.getElementById('sumSalTransferVal').textContent = s.fin.salTransfer.toFixed(0);
+                        document.getElementById('rowSalDrawer').classList.toggle('hidden', !prefs.showSalDrawer);
+                        document.getElementById('sumSalDrawerVal').textContent = s.fin.salDrawer.toFixed(0);
+                        document.getElementById('rowSalTailor').classList.toggle('hidden', !prefs.showSalTailor);
+                        document.getElementById('sumSalTailorVal').textContent = s.fin.salTailor.toFixed(0);
+
+                        document.getElementById('rowUnusedOff').classList.toggle('hidden', !prefs.showUnusedOff);
+                        document.getElementById('sumUnusedOffVal').textContent = s.unusedOffVal.toFixed(0);
+                        
+                        document.getElementById('rowOvertime').classList.toggle('hidden', !prefs.showOvertime);
                         document.getElementById('sumOvertimeHrs').textContent = `${formatHours(s.overTimeHrs)} ساعة`;
                         document.getElementById('sumOvertimeVal').textContent = s.overTimeVal.toFixed(0);
                         
+                        document.getElementById('rowComm1').classList.toggle('hidden', !prefs.showSalesComm);
                         document.getElementById('sumComm1Text').textContent = `${s.fin.tabby} تابى و ${s.fin.tamara} تمارا و ${s.fin.mora} مورا`;
                         document.getElementById('sumComm1Val').textContent = s.comm1.toFixed(0);
                         
+                        document.getElementById('rowComm2').classList.toggle('hidden', !prefs.showSimComm);
                         document.getElementById('sumComm2Text').textContent = `${s.fin.simPhones} هواتف و ${s.fin.simHuawei} هواوى`;
                         document.getElementById('sumComm2Val').textContent = s.comm2.toFixed(0);
                         
+                        document.getElementById('rowAbsence').classList.toggle('hidden', !prefs.showAbsence);
                         document.getElementById('sumAbsenceVal').textContent = s.absenceVal.toFixed(0);
                         
+                        document.getElementById('rowDelay').classList.toggle('hidden', !prefs.showDelay);
                         document.getElementById('sumDelayHrs').textContent = `${formatHours(s.delayHrs)} ساعة`;
                         document.getElementById('sumDelayVal').textContent = s.delayVal.toFixed(0);
                         
                         document.getElementById('sumNet').textContent = s.netBeforeDeductions.toFixed(0);
                         
+                        document.getElementById('rowAdvances').classList.toggle('hidden', !prefs.showAdvances);
                         document.getElementById('sumAdvancesVal').textContent = s.fin.advances.toFixed(0);
+                        
+                        document.getElementById('rowPurchases').classList.toggle('hidden', !prefs.showPurchases);
                         document.getElementById('sumPurchasesVal').textContent = s.fin.purchases.toFixed(0);
+                        
+                        document.getElementById('rowShipping').classList.toggle('hidden', !prefs.showShipping);
                         document.getElementById('sumShippingVal').textContent = s.fin.shippingCredit.toFixed(0);
                         
+                        document.getElementById('rowFinal').classList.toggle('hidden', prefs.showFinalNet === false);
                         document.getElementById('sumFinal').textContent = s.finalSalary.toFixed(0);
                         
                         sumCard.classList.remove('hidden');
@@ -671,6 +834,10 @@
                     tbody.innerHTML += `
                         <tr>
                             <td><strong>${emp.name}</strong></td>
+                            <td><input type="number" class="fin-input" value="${fin.salCash}" onchange="AppController.updateFin('${emp.id}','salCash',this.value)"></td>
+                            <td><input type="number" class="fin-input" value="${fin.salTransfer}" onchange="AppController.updateFin('${emp.id}','salTransfer',this.value)"></td>
+                            <td><input type="number" class="fin-input" value="${fin.salDrawer}" onchange="AppController.updateFin('${emp.id}','salDrawer',this.value)"></td>
+                            <td><input type="number" class="fin-input" value="${fin.salTailor}" onchange="AppController.updateFin('${emp.id}','salTailor',this.value)"></td>
                             <td><input type="number" class="fin-input" value="${fin.advances}" onchange="AppController.updateFin('${emp.id}','advances',this.value)"></td>
                             <td><input type="number" class="fin-input" value="${fin.purchases}" onchange="AppController.updateFin('${emp.id}','purchases',this.value)"></td>
                             <td><input type="number" class="fin-input" value="${fin.shippingCredit}" onchange="AppController.updateFin('${emp.id}','shippingCredit',this.value)"></td>
@@ -690,144 +857,126 @@
                 if (document.getElementById('filterEmployee').value === empId && document.getElementById('filterMonth').value === month) AppController.renderLogs();
             },
 
-            // --- PDF Export Vanilla JS ---
-            printHTML: (htmlContent, title) => {
-                const printWin = window.open('', '_blank');
-                printWin.document.write(`
-                    <html dir="rtl" lang="ar">
-                    <head>
-                        <title>${title}</title>
-                        <style>
-                            body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; padding: 20px; color: #000; direction: rtl; }
-                            .slip-container { max-width: 600px; margin: 0 auto; background: #fff; }
-                            .slip-header { text-align: center; padding-bottom: 10px; font-size: 32px; font-weight: bold; border-bottom: 2px solid #000; margin-bottom: 5px; }
-                            .slip-table { width: 100%; border-collapse: collapse; font-weight: bold; font-size: 18px; }
-                            .slip-table td { padding: 10px 5px; border: none; }
-                            .bg-green-light { background-color: #eaf1e3; border-bottom: 2px solid #fff; }
-                            .bg-red-light { background-color: #f7e6e1; border-bottom: 2px solid #fff; }
-                            .bg-green-dark { background-color: #c0d8a5; border-top: 2px solid #000; border-bottom: 2px solid #000; }
-                            .td-right { text-align: right; width: 33%; padding-right: 20px !important; }
-                            .td-center { text-align: center; width: 44%; }
-                            .td-left { text-align: left; width: 23%; padding-left: 20px !important; font-size: 22px; font-family: Arial, sans-serif; }
-                        </style>
-                    </head>
-                    <body>${htmlContent}</body>
-                    </html>
-                `);
-                printWin.document.close(); printWin.focus();
-                setTimeout(() => { printWin.print(); printWin.close(); }, 300);
+            // --- PDF Export Fixing iOS Issue ---
+            printHTML: (htmlContent) => {
+                const printArea = document.getElementById('printArea');
+                printArea.innerHTML = htmlContent;
+                // Wait for render, trigger print natively
+                setTimeout(() => {
+                    window.print();
+                    // Clear DOM after short delay to return to normal app state
+                    setTimeout(() => { printArea.innerHTML = ''; }, 1000);
+                }, 300);
+            },
+            
+            generateSlipHTML: (s) => {
+                const prefs = s.emp.prefs || { 
+                    showSalCash: false, showSalTransfer: false, showSalDrawer: false, showSalTailor: false,
+                    showUnusedOff: true, showOvertime: true, showSalesComm: true, showSimComm: true, 
+                    showAbsence: true, showDelay: true, showAdvances: true, showPurchases: true, showShipping: true, showFinalNet: true 
+                };
+                
+                let html = `
+                    <div class="slip-container">
+                        <div class="slip-header">${s.emp.name}</div>
+                        <table class="slip-table">
+                            <tr class="print-bg-g-light">
+                                <td colspan="2" class="print-td-right" style="width: 77%;">الراتب الأساسي</td>
+                                <td class="print-td-left">${s.baseSalary.toFixed(0)}</td>
+                            </tr>`;
+                            
+                if(prefs.showSalCash) html += `<tr class="print-bg-g-light print-sub-item"><td class="print-td-right">— من الكاش</td><td class="print-td-sub-val">${s.fin.salCash.toFixed(0)}</td><td></td></tr>`;
+                if(prefs.showSalTransfer) html += `<tr class="print-bg-g-light print-sub-item"><td class="print-td-right">— من التحويل</td><td class="print-td-sub-val">${s.fin.salTransfer.toFixed(0)}</td><td></td></tr>`;
+                if(prefs.showSalDrawer) html += `<tr class="print-bg-g-light print-sub-item"><td class="print-td-right">— من درج الشحن</td><td class="print-td-sub-val">${s.fin.salDrawer.toFixed(0)}</td><td></td></tr>`;
+                if(prefs.showSalTailor) html += `<tr class="print-bg-g-light print-sub-item"><td class="print-td-right">— من محل الخياط</td><td class="print-td-sub-val">${s.fin.salTailor.toFixed(0)}</td><td></td></tr>`;
+
+                if(prefs.showUnusedOff) {
+                    html += `<tr class="print-bg-g-light">
+                                <td colspan="2" class="print-td-right">اضافى ايام من الاوف</td>
+                                <td class="print-td-left">${s.unusedOffVal.toFixed(0)}</td>
+                             </tr>`;
+                }
+                            
+                if(prefs.showOvertime) {
+                    html += `<tr class="print-bg-g-light">
+                                <td class="print-td-right">اضافى</td>
+                                <td class="print-td-center">${formatHours(s.overTimeHrs)} ساعة</td>
+                                <td class="print-td-left">${s.overTimeVal.toFixed(0)}</td>
+                             </tr>`;
+                }
+                if(prefs.showSalesComm) {
+                    html += `<tr class="print-bg-g-light">
+                                <td class="print-td-right">عمولات مبيعات</td>
+                                <td class="print-td-center">${s.fin.tabby} تابى و ${s.fin.tamara} تمارا و ${s.fin.mora} مورا</td>
+                                <td class="print-td-left">${s.comm1.toFixed(0)}</td>
+                             </tr>`;
+                }
+                if(prefs.showSimComm) {
+                    html += `<tr class="print-bg-g-light">
+                                <td class="print-td-right">ع . شرائح</td>
+                                <td class="print-td-center">${s.fin.simPhones} هواتف و ${s.fin.simHuawei} هواوى</td>
+                                <td class="print-td-left">${s.comm2.toFixed(0)}</td>
+                             </tr>`;
+                }
+                
+                if(prefs.showAbsence) {
+                    html += `<tr class="print-bg-r-light">
+                                <td colspan="2" class="print-td-right">غياب</td>
+                                <td class="print-td-left">${s.absenceVal.toFixed(0)}</td>
+                             </tr>`;
+                }
+                         
+                if(prefs.showDelay) {
+                    html += `<tr class="print-bg-r-light">
+                                <td class="print-td-right">تأخير</td>
+                                <td class="print-td-center">${formatHours(s.delayHrs)} ساعة</td>
+                                <td class="print-td-left">${s.delayVal.toFixed(0)}</td>
+                             </tr>`;
+                }
+                
+                html += `<tr class="print-bg-g-dark">
+                            <td colspan="2" class="print-td-right">صافى المرتب</td>
+                            <td class="print-td-left">${s.netBeforeDeductions.toFixed(0)}</td>
+                         </tr>`;
+                         
+                if(prefs.showAdvances) { html += `<tr class="print-bg-r-light"><td colspan="2" class="print-td-right">مسحوبات (سلف)</td><td class="print-td-left">${s.fin.advances.toFixed(0)}</td></tr>`; }
+                if(prefs.showPurchases) { html += `<tr class="print-bg-r-light"><td colspan="2" class="print-td-right">آجل النظام</td><td class="print-td-left">${s.fin.purchases.toFixed(0)}</td></tr>`; }
+                if(prefs.showShipping) { html += `<tr class="print-bg-r-light"><td colspan="2" class="print-td-right">آجل الشحن</td><td class="print-td-left">${s.fin.shippingCredit.toFixed(0)}</td></tr>`; }
+                
+                if (prefs.showFinalNet !== false) {
+                    html += `   <tr class="print-bg-g-dark">
+                                    <td colspan="2" class="print-td-right">المرتب بعد المسحوبات والاجل</td>
+                                    <td class="print-td-left">${s.finalSalary.toFixed(0)}</td>
+                                </tr>`;
+                }
+                html += `</table></div>`;
+                return html;
             },
 
             exportEmployeePDF: () => {
                 const month = document.getElementById('filterMonth').value, empId = document.getElementById('filterEmployee').value;
                 const s = AppController.calculateSummary(empId, month);
                 if (!s) return;
-
-                let html = `
-                    <div class="slip-container">
-                        <div class="slip-header">${s.emp.name}</div>
-                        <table class="slip-table">
-                            <tr class="bg-green-light">
-                                <td colspan="2" class="td-right" style="width: 77%;">الراتب</td>
-                                <td class="td-left">${s.baseSalary.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-green-light">
-                                <td colspan="2" class="td-right">اضافى ايام من الاوف</td>
-                                <td class="td-left">${s.unusedOffVal.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-green-light">
-                                <td class="td-right">اضافى</td>
-                                <td class="td-center">${formatHours(s.overTimeHrs)} ساعة</td>
-                                <td class="td-left">${s.overTimeVal.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-green-light">
-                                <td class="td-right">عمولات مبيعات</td>
-                                <td class="td-center">${s.fin.tabby} تابى و ${s.fin.tamara} تمارا و ${s.fin.mora} مورا</td>
-                                <td class="td-left">${s.comm1.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-green-light">
-                                <td class="td-right">ع . شرائح</td>
-                                <td class="td-center">${s.fin.simPhones} هواتف و ${s.fin.simHuawei} هواوى</td>
-                                <td class="td-left">${s.comm2.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-red-light">
-                                <td colspan="2" class="td-right">غياب</td>
-                                <td class="td-left">${s.absenceVal.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-red-light">
-                                <td class="td-right">تأخير</td>
-                                <td class="td-center">${formatHours(s.delayHrs)} ساعة</td>
-                                <td class="td-left">${s.delayVal.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-green-dark">
-                                <td colspan="2" class="td-right">صافى المرتب</td>
-                                <td class="td-left">${s.netBeforeDeductions.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-red-light">
-                                <td colspan="2" class="td-right">مسحوبات (سلف)</td>
-                                <td class="td-left">${s.fin.advances.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-red-light">
-                                <td colspan="2" class="td-right">آجل النظام</td>
-                                <td class="td-left">${s.fin.purchases.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-red-light">
-                                <td colspan="2" class="td-right">آجل الشحن</td>
-                                <td class="td-left">${s.fin.shippingCredit.toFixed(0)}</td>
-                            </tr>
-                            <tr class="bg-green-dark">
-                                <td colspan="2" class="td-right">المرتب بعد المسحوبات والاجل</td>
-                                <td class="td-left">${s.finalSalary.toFixed(0)}</td>
-                            </tr>
-                        </table>
-                    </div>
-                `;
-                AppController.printHTML(html, 'كشف راتب موظف');
+                
+                // Wrapping single slip to center it on print page
+                let html = `<div style="max-width: 600px; margin: 0 auto; margin-top: 50px;">${AppController.generateSlipHTML(s)}</div>`;
+                AppController.printHTML(html);
             },
 
             exportGlobalPDF: () => {
                 const month = document.getElementById('finMonth').value;
                 if(DataLayer.employees.length === 0) return AppController.showToast('لا يوجد موظفين', 'error');
 
-                let html = `
-                    <style>
-                        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; text-align:center; }
-                        th, td { border: 1px solid #ccc; padding: 10px; }
-                        th { background-color: #f4f6f8; font-weight: bold; }
-                    </style>
-                    <div style="text-align:center; margin-bottom: 20px;">
-                        <h3>مسير الرواتب المجمع لشهر: <span dir="ltr">${month}</span></h3>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr><th>اسم الموظف</th><th>الراتب الأساسي</th><th>فرق الدوام والغياب</th><th>إجمالي العمولات (+)</th><th>الخصومات والسلف (-)</th><th>الصافي النهائي للصرف</th></tr>
-                        </thead>
-                        <tbody>
-                `;
-                let totalSalaries = 0;
+                let html = `<div class="global-print-title">مسير الرواتب (كروت مجمعة) لشهر: <span dir="ltr">${month}</span></div>`;
+                html += `<div class="bulk-print-grid">`;
+                
                 DataLayer.employees.forEach(emp => {
                     const s = AppController.calculateSummary(emp.id, month);
-                    if(s) {
-                        let attendanceDiff = s.unusedOffVal + s.overTimeVal - s.absenceVal - s.delayVal; 
-                        html += `
-                            <tr>
-                                <td><strong>${s.emp.name}</strong></td>
-                                <td>${s.baseSalary}</td>
-                                <td dir="ltr" style="color: ${attendanceDiff >= 0 ? '#4CAF50' : '#f44336'}">${attendanceDiff >= 0 ? '+' : ''}${attendanceDiff.toFixed(0)}</td>
-                                <td style="color:#4CAF50">${s.commissions.toFixed(0)}</td>
-                                <td style="color:#f44336">${s.deductions.toFixed(0)}</td>
-                                <td><strong style="color: #1976D2; font-size: 16px;">${s.finalSalary.toFixed(0)}</strong></td>
-                            </tr>
-                        `;
-                        totalSalaries += s.finalSalary;
-                    }
+                    if(s) html += AppController.generateSlipHTML(s);
                 });
-                html += `</tbody></table>
-                    <div style="text-align:center; padding:20px; margin-top:20px; background:#e8f5e9; border:2px solid #4CAF50; border-radius:8px;">
-                        <span style="font-size:16px;">إجمالي الرواتب المستحقة للصرف هذا الشهر: </span>
-                        <strong style="font-size:24px; color:#4CAF50;">${totalSalaries.toFixed(0)} SAR</strong>
-                    </div>`;
-                AppController.printHTML(html, 'مسير الرواتب المجمع (للمدير)');
+                
+                html += `</div>`;
+                AppController.printHTML(html);
             },
 
             clearAll: () => { if(confirm('متأكد من مسح جميع البيانات؟')) { StorageManager.clearAll(); location.reload(); } },
